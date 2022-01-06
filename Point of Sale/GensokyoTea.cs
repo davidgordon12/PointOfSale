@@ -71,11 +71,12 @@ namespace Point_of_Sale
 
         private void btnCompleTxn_Click(object sender, EventArgs e)
         {
+            //Take the items out of stock
             foreach (Tea item in shoppingCart)
             {
                 item.TeaQuantity = item.TeaQuantity - 1;
             }
-
+            
             TeaBinding.DataSource = inventory.Teas.Where(x => x.TeaQuantity > 0).ToList();
 
             shoppingCart.Clear();
@@ -105,6 +106,7 @@ namespace Point_of_Sale
         {
             Tea selectedItem = (Tea)teasListBox.SelectedItem;
 
+            //Loop through to add the selected item however many times the user speciifed.
             while (qtyForm.quantity > 0)
             {
                 shoppingCart.Add(selectedItem);
@@ -113,6 +115,7 @@ namespace Point_of_Sale
 
             }
 
+            //Reset the quantity
             qtyForm.quantity = 1;
 
             txtTotal.Text = String.Format("${0}", subtotal.ToString());
@@ -123,6 +126,7 @@ namespace Point_of_Sale
 
         private void btnDiscount_Click(object sender, EventArgs e)
         {
+            //Opens a seperate form for the user to enter an amount.
             d_form.Show();
         }
     }
